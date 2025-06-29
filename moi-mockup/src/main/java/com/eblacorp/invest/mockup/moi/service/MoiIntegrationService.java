@@ -1,0 +1,42 @@
+package com.eblacorp.invest.mockup.moi.service;
+
+import com.eblacorp.invest.mockup.moi.rest.request.CancelRealestateApplicationRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.GetRealestateApplicationsRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.GetResidencyRevokeApplicationsRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.GetResidentsWithRealEstatePrivilegeRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.ReceiveRealestateApplicationRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.RegisterPropertyTitleDeedRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.RegisterQidRealEstatePrivilegesRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.RegisterResidencyRevokeApplicationRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.ValidateReceiveApplicationEligibilityRequest;
+import com.eblacorp.invest.mockup.moi.rest.response.CancelRealestateApplicationResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.GetRealestateApplicationsResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.GetResidencyRevokeApplicationsResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.GetResidentsWithRealEstatePrivilegeResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.ReceiveRealestateApplicationResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.RegisterPropertyTitleDeedResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.RegisterQidRealEstatePrivilegesResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.RegisterResidencyRevokeApplicationResponse;
+import com.eblacorp.invest.mockup.moi.rest.response.ValidateReceiveApplicationEligibilityResponse;
+
+public interface MoiIntegrationService {
+
+	ValidateReceiveApplicationEligibilityResponse validateReceiveApplicationEligibility(ValidateReceiveApplicationEligibilityRequest request);
+
+	ReceiveRealestateApplicationResponse receiveRealestateApplication(ReceiveRealestateApplicationRequest request);
+
+	CancelRealestateApplicationResponse cancelRealestateApplication(CancelRealestateApplicationRequest request);
+
+	GetRealestateApplicationsResponse getRealestateApplications(GetRealestateApplicationsRequest request);
+
+	RegisterPropertyTitleDeedResponse registerPropertyTitleDeed(RegisterPropertyTitleDeedRequest request);
+
+	RegisterQidRealEstatePrivilegesResponse registerQidRealEstatePrivileges(RegisterQidRealEstatePrivilegesRequest request);
+
+	GetResidentsWithRealEstatePrivilegeResponse getResidentsWithRealEstateRpOrPrivileges(GetResidentsWithRealEstatePrivilegeRequest request);
+
+	RegisterResidencyRevokeApplicationResponse registerResidencyRevokeApplication(RegisterResidencyRevokeApplicationRequest request);
+
+	GetResidencyRevokeApplicationsResponse getResidencyRevokeApplications(GetResidencyRevokeApplicationsRequest request);
+
+}
