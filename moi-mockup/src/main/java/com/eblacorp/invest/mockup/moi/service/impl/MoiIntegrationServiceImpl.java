@@ -124,7 +124,11 @@ public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 	@Override
 	public RegisterResidencyRevokeApplicationResponse registerResidencyRevokeApplication(
 			RegisterResidencyRevokeApplicationRequest request) {
-		return null;
+		return new RegisterResidencyRevokeApplicationResponse(
+				"VHP000",
+				" تم استقبال طلب سحب الإقامة العقارية ",
+				"Request to revoke Real-estate Residency received successfully"
+		);
 	}
 
 	@Override
