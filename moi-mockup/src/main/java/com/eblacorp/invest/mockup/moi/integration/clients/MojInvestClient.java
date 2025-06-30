@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.eblacorp.invest.mockup.moi.integration.request.CancelRealestateApplicationRequest;
 import com.eblacorp.invest.mockup.moi.integration.request.GetPropertyTitleDeedRequest;
-import com.eblacorp.invest.mockup.moi.integration.request.RecieveRealestateApplicationRequest;
 import com.eblacorp.invest.mockup.moi.integration.request.RegisterPropertyTitleDeedRequest;
 import com.eblacorp.invest.mockup.moi.integration.request.RegisterQidRealEstatePrivilegesRequest;
 import com.eblacorp.invest.mockup.moi.integration.request.RegisterRealEstateVisaChangeRequest;
@@ -23,9 +22,10 @@ import com.eblacorp.invest.mockup.moi.integration.response.RegisterRealEstateVis
 import com.eblacorp.invest.mockup.moi.integration.response.RegisterRealestateApplicationDecisionResponse;
 import com.eblacorp.invest.mockup.moi.integration.response.RegisterResidentPurposeChangeResponse;
 import com.eblacorp.invest.mockup.moi.integration.response.ResidencyRevokeApplicationResponse;
+import com.eblacorp.invest.mockup.moi.rest.request.ConfirmRecieveRealestateApplicationRequest;
 import com.eblacorp.invest.mockup.moi.rest.response.RestResponse;
 
-@FeignClient(url = "${integration.moi.invest}",value ="MojInvestClient")
+@FeignClient(url = "${integration.moj.invest}",value ="MojInvestClient")
 public interface MojInvestClient {
 
 	@PostMapping("/registerRealestateApplicationDecision")
@@ -41,7 +41,7 @@ public interface MojInvestClient {
 	RestResponse<GetPropertyTitleDeedResponse> getPropertyTitleDeed(@RequestBody GetPropertyTitleDeedRequest reuest);
 	
 	@PutMapping("/confirmRecieveRealestateApplication")
-	RestResponse<RecieveRealestateApplicationResponse> confirmRecieveRealestateApplication(@RequestBody RecieveRealestateApplicationRequest reuest);
+	RestResponse<RecieveRealestateApplicationResponse> confirmRecieveRealestateApplication(@RequestBody ConfirmRecieveRealestateApplicationRequest reuest);
 	
 	@PutMapping("/confirmCancelRealestateApplication")
 	RestResponse<CancelRealestateApplicationResponse> confirmCancelRealestateApplication(@RequestBody CancelRealestateApplicationRequest reuest);

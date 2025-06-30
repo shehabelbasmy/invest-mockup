@@ -1,13 +1,19 @@
 package com.eblacorp.invest.mockup.moi.service.impl;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eblacorp.invest.mockup.moi.entity.MoiApplication;
+import com.eblacorp.invest.mockup.moi.entity.RealEstateApplication;
 import com.eblacorp.invest.mockup.moi.integration.clients.MojInvestClient;
+import com.eblacorp.invest.mockup.moi.repository.RealEstateApplicationReposiotry;
 import com.eblacorp.invest.mockup.moi.rest.request.CancelRealestateApplicationRequest;
+import com.eblacorp.invest.mockup.moi.rest.request.ConfirmRecieveRealestateApplicationRequest;
 import com.eblacorp.invest.mockup.moi.rest.request.GetRealestateApplicationsRequest;
 import com.eblacorp.invest.mockup.moi.rest.request.GetResidencyRevokeApplicationsRequest;
 import com.eblacorp.invest.mockup.moi.rest.request.GetResidentsWithRealEstatePrivilegeRequest;
@@ -26,6 +32,7 @@ import com.eblacorp.invest.mockup.moi.rest.response.RegisterQidRealEstatePrivile
 import com.eblacorp.invest.mockup.moi.rest.response.RegisterResidencyRevokeApplicationResponse;
 import com.eblacorp.invest.mockup.moi.rest.response.ValidateReceiveApplicationEligibilityResponse;
 import com.eblacorp.invest.mockup.moi.service.MoiIntegrationService;
+import com.eblacorp.invest.mockup.moi.util.TimerExecuter;
 
 import lombok.AllArgsConstructor;
 
@@ -33,11 +40,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 	
-	@Autowired
 	private final EntityManager entityManager;
-	
-	@Autowired
 	private final MojInvestClient mojInvestClient;
+	private final RealEstateApplicationReposiotry realEstateApplicationReposiotry;
 	
 	@Override
 	public ValidateReceiveApplicationEligibilityResponse validateReceiveApplicationEligibility(
@@ -49,26 +54,44 @@ public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 	@Override
 	public ReceiveRealestateApplicationResponse receiveRealestateApplication(
 			ReceiveRealestateApplicationRequest request) {
-//		return ReceiveRealestateApplicationResponse.builder()
-//			.aplExpiryDate("")
-//			.aplRecieveDate(null)
-//			.applicantType(null)
-//			.applicationNumber("applicationNumber")
-//			.applicationStatusDesAr("applicationStatusDesAr")
-//			.applicationStatusDesEn("applicationStatusDesEn")
-//			.notesAr("NoteAr")
-//			.notesEn("NoteEn")
-//			.processStatusCode("processStatusCode")
-//			.processStatusDescArb("processStatusDescArb")
-//			.processStatusDescEng("processStatusDescEng")
-//			.visaStatusDesEn("visaStatusDesEn")
-//			.visaStatusDesAr("visaStatusDesAr")
-//			.visaNumber("wef927834rf")
-//			.visaExpiryDate("2028-06-12")
-//			.visaIssueDate("2026-06-12")
-//			.residentQID(request.getResidentQID())
-//			.build();
-		return null;
+		RealEstateApplication realRestateApplication= map(request);
+		TimerExecuter.executeAfter(()->{
+			RealEstateApplication saved=realEstateApplicationReposiotry.save(realRestateApplication);
+			ConfirmRecieveRealestateApplicationRequest recieve= map(saved);
+			mojInvestClient.confirmRecieveRealestateApplication(recieve);
+		});
+		return ReceiveRealestateApplicationResponse.builder()
+			.respCode("VHP000")
+			.respArabicMsg("تم إستقبال الطلب بنجاح")
+			.respEngMsg("Application is received successfully")
+			.build();
+	}
+
+	private ConfirmRecieveRealestateApplicationRequest map(RealEstateApplication saved) {
+		return ConfirmRecieveRealestateApplicationRequest.builder()
+			.aplExpiryDate(null)
+			.aplRecieveDate(null)
+			.build();
+	}
+
+	private RealEstateApplication map(ReceiveRealestateApplicationRequest request) {
+		
+		return RealEstateApplication.builder()
+				.aplRecieveDate(Date.from(Instant.now()))
+				.aplExpiryDate(Date.from(ZonedDateTime.now().plusYears(1).toInstant()))
+				.applicationNumber(Math.random()*10000+"")
+				.applicationStatusDesAr("applicationStatusDesAr")
+				.applicationStatusDesEn("applicationStatusDesEn")
+				.notesAr("NoteAr")
+				.notesEn("NoteEn")
+				.processStatusCode("processStatusCode")
+				.processStatusDescArb("processStatusDescArb")
+				.processStatusDescEng("processStatusDescEng")
+				.visaStatusDesEn("visaStatusDesEn")
+				.visaStatusDesAr("visaStatusDesAr")
+				.visaNumber((Math.random()*10000+""))
+				.residentQID(request.getResidentQID())
+				.build();
 	}
 
 	@Override

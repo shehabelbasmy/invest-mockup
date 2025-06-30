@@ -84,7 +84,7 @@ public class MoiApplication {
 	private String notesEn;
 
 	@Column(name = "QID")
-	private Long qid;
+	private String qid;
 
 	@Column(name = "QID_STATUS")
 	private String qidStatus;

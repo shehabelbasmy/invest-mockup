@@ -1,4 +1,4 @@
-package com.eblacorp.invest.mockup.moi.integration.request;
+package com.eblacorp.invest.mockup.moi.rest.request;
 
 import java.util.Date;
 
@@ -11,12 +11,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor//confirm
 @Builder
-public class RecieveRealestateApplicationRequest {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ConfirmRecieveRealestateApplicationRequest {
 
-	
 	private String mojAplRefNum; // sak invest requestID
 	private String moiAplRefNum; // id of moi (inside moiApplicaiton moi_application_num)
 	
