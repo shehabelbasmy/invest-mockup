@@ -69,14 +69,17 @@ public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 
 	private ConfirmRecieveRealestateApplicationRequest map(RealEstateApplication saved) {
 		return ConfirmRecieveRealestateApplicationRequest.builder()
-			.aplExpiryDate(null)
-			.aplRecieveDate(null)
+			.aplExpiryDate(saved.getAplExpiryDate())
+			.aplRecieveDate(saved.getAplRecieveDate())
+			.mojAplRefNum(saved.getMojAplRefNum())
+			.moiAplRefNum(saved.getId().toString())
 			.build();
 	}
 
 	private RealEstateApplication map(ReceiveRealestateApplicationRequest request) {
 		
 		return RealEstateApplication.builder()
+				.mojAplRefNum(request.getMojAplRefNum())
 				.aplRecieveDate(Date.from(Instant.now()))
 				.aplExpiryDate(Date.from(ZonedDateTime.now().plusYears(1).toInstant()))
 				.applicationNumber(Math.random()*10000+"")

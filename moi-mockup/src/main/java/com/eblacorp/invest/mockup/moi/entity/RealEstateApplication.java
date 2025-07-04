@@ -30,6 +30,7 @@ public class RealEstateApplication {
 	@SequenceGenerator(name = "REAL_ESTATE_APPLICATION_SEQ", sequenceName = "REAL_ESTATE_APPLICATION_SEQ", initialValue = 1)
 	@GeneratedValue(generator = "REAL_ESTATE_APPLICATION_SEQ", strategy = GenerationType.SEQUENCE)
 	private Long id;
+	private String mojAplRefNum;
 	private String processStatusCode;
 	private String processStatusDescArb;
 	private String processStatusDescEng;

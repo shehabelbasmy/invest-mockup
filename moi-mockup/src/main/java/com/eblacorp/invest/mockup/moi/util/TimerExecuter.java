@@ -9,9 +9,7 @@ public class TimerExecuter {
 	public static void executeAfter(Runnable task) {
 		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-        long delay = 5; // Delay in seconds
-
-        scheduler.schedule(task, delay, TimeUnit.SECONDS);
+        scheduler.schedule(task, 10, TimeUnit.SECONDS);
 
         scheduler.shutdown();
 	}
