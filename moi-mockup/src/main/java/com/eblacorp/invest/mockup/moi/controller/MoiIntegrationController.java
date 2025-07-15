@@ -1,6 +1,7 @@
 package com.eblacorp.invest.mockup.moi.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class MoiIntegrationController {
 		return ResponseEntity.ok(moiIntegrationService.cancelRealestateApplication(request));
 	}
 	
-	@PostMapping("/getRealestateApplications")
+	@GetMapping("/getRealestateApplications")
 	public ResponseEntity<?> getRealestateApplications(@RequestBody GetRealestateApplicationsRequest request){
 		return ResponseEntity.ok(moiIntegrationService.getRealestateApplications(request));
 	}
