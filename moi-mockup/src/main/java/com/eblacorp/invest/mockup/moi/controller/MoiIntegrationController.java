@@ -27,8 +27,8 @@ public class MoiIntegrationController {
 	
 	private MoiIntegrationService moiIntegrationService;
 	
-	@PostMapping("/validateReceiveApplicationEligibility")
-	public ResponseEntity<?> validateReceiveApplicationEligibility(@RequestBody ValidateReceiveApplicationEligibilityRequest request){
+	@GetMapping("/ValidateReceiveApplicationEligibility")
+	public ResponseEntity<?> validateReceiveApplicationEligibility(ValidateReceiveApplicationEligibilityRequest request){
 		return ResponseEntity.ok(moiIntegrationService.validateReceiveApplicationEligibility(request));
 	}
 	
