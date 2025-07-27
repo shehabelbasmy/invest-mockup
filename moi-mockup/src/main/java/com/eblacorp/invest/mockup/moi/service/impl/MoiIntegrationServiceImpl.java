@@ -3,14 +3,14 @@ package com.eblacorp.invest.mockup.moi.service.impl;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Date;
-
-import javax.persistence.EntityManager;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.eblacorp.invest.mockup.moi.entity.MoiApplication;
+import com.eblacorp.invest.mockup.moi.entity.EligiblePersons;
 import com.eblacorp.invest.mockup.moi.entity.RealEstateApplication;
 import com.eblacorp.invest.mockup.moi.integration.clients.MojInvestClient;
+import com.eblacorp.invest.mockup.moi.repository.EligiblePersonsRepository;
 import com.eblacorp.invest.mockup.moi.repository.RealEstateApplicationReposiotry;
 import com.eblacorp.invest.mockup.moi.rest.request.CancelRealestateApplicationRequest;
 import com.eblacorp.invest.mockup.moi.rest.request.ConfirmRecieveRealestateApplicationRequest;
@@ -40,15 +40,23 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 	
-	private final EntityManager entityManager;
 	private final MojInvestClient mojInvestClient;
 	private final RealEstateApplicationReposiotry realEstateApplicationReposiotry;
+	private final EligiblePersonsRepository eligiblePersonsRepository; 
 	
 	@Override
 	public ValidateReceiveApplicationEligibilityResponse validateReceiveApplicationEligibility(
 			ValidateReceiveApplicationEligibilityRequest request) {
-		MoiApplication find = entityManager.find(MoiApplication.class, 1l);
-		return null;
+		Optional<EligiblePersons> findOne = eligiblePersonsRepository.findOne((root,cq,cb)->{
+			return cb.equal(root.get("qid"), request.getQid());
+		});
+
+		if (findOne.isPresent()) return ValidateReceiveApplicationEligibilityResponse.builder().build();
+			
+		return ValidateReceiveApplicationEligibilityResponse.builder()
+				.applicantType(request.getAppType())
+				.applicantTypeDesAr("applicatn type Desr")
+				.allowedToApply(findOne.get().getAllowedToApply()).build();
 	}
 
 	@Override
