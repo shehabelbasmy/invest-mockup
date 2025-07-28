@@ -1,5 +1,6 @@
 package com.eblacorp.invest.mockup.moi.rest.response;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.eblacorp.invest.mockup.moi.dto.RequiredDocumentDto;
@@ -25,6 +26,8 @@ public class ValidateReceiveApplicationEligibilityResponse {
     private String applicantTypeDesEn;
     private String notesAr;
     private String notesEn;
-    private List<RequiredDocumentDto> applicationRequiredDocuments;
-    private ResidentApplicantDetailDto residentApplicantDetail;
+    @Builder.Default
+    private List<RequiredDocumentDto> applicationRequiredDocuments=Collections.emptyList();
+    @Builder.Default
+    private ResidentApplicantDetailDto residentApplicantDetail=new ResidentApplicantDetailDto();
 }

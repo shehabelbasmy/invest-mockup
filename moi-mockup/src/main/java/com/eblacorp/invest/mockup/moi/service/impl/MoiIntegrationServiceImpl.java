@@ -51,7 +51,7 @@ public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 			return cb.equal(root.get("qid"), request.getQid());
 		});
 
-		if (oprional.isPresent()) return ValidateReceiveApplicationEligibilityResponse.builder().build();
+		if (!oprional.isPresent()) return ValidateReceiveApplicationEligibilityResponse.builder().build();
 			
 		EligiblePersons eligiblePerson = oprional.get();
 		return ValidateReceiveApplicationEligibilityResponse.builder()
