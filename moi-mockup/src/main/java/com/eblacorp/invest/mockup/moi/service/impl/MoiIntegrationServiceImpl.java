@@ -47,16 +47,17 @@ public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 	@Override
 	public ValidateReceiveApplicationEligibilityResponse validateReceiveApplicationEligibility(
 			ValidateReceiveApplicationEligibilityRequest request) {
-		Optional<EligiblePersons> findOne = eligiblePersonsRepository.findOne((root,cq,cb)->{
+		Optional<EligiblePersons> oprional = eligiblePersonsRepository.findOne((root,cq,cb)->{
 			return cb.equal(root.get("qid"), request.getQid());
 		});
 
-		if (findOne.isPresent()) return ValidateReceiveApplicationEligibilityResponse.builder().build();
+		if (oprional.isPresent()) return ValidateReceiveApplicationEligibilityResponse.builder().build();
 			
+		EligiblePersons eligiblePerson = oprional.get();
 		return ValidateReceiveApplicationEligibilityResponse.builder()
 				.applicantType(request.getAppType())
 				.applicantTypeDesAr("applicatn type Desr")
-				.allowedToApply(findOne.get().getAllowedToApply()).build();
+				.allowedToApply(eligiblePerson.getAllowedToApply()).build();
 	}
 
 	@Override
