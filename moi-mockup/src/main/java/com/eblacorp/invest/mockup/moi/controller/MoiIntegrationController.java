@@ -64,8 +64,14 @@ public class MoiIntegrationController {
 	public ResponseEntity<?> registerResidencyRevokeApplication(@RequestBody RegisterResidencyRevokeApplicationRequest request){
 		return ResponseEntity.ok(moiIntegrationService.registerResidencyRevokeApplication(request));
 	}
+
 	@PostMapping("/getResidencyRevokeApplications")
 	public ResponseEntity<?> getResidencyRevokeApplications(@RequestBody GetResidencyRevokeApplicationsRequest request){
 		return ResponseEntity.ok(moiIntegrationService.getResidencyRevokeApplications(request));
+	}
+
+	@PostMapping("/confirmResidencyRevokeApplication")
+	public ResponseEntity<?> confirmResidencyRevokeApplication(@RequestBody RegisterResidencyRevokeApplicationRequest request){
+		return ResponseEntity.ok(moiIntegrationService.confirmResidencyRevokeApplication(request));
 	}
 }

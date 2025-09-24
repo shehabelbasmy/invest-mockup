@@ -149,4 +149,13 @@ public class MoiIntegrationServiceImpl implements MoiIntegrationService {
 		return null;
 	}
 
+	@Override
+	public RegisterResidencyRevokeApplicationResponse confirmResidencyRevokeApplication(RegisterResidencyRevokeApplicationRequest request) {
+		return new RegisterResidencyRevokeApplicationResponse(
+				"MOJ000",
+				"تم تأكيد استلام قرار تسجيل الطلب ",
+				"Confirmation reflected successfully"
+		);
+	}
+
 }

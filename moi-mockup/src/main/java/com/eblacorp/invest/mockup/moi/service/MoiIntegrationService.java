@@ -39,4 +39,5 @@ public interface MoiIntegrationService {
 
 	GetResidencyRevokeApplicationsResponse getResidencyRevokeApplications(GetResidencyRevokeApplicationsRequest request);
 
+	RegisterResidencyRevokeApplicationResponse confirmResidencyRevokeApplication(RegisterResidencyRevokeApplicationRequest request);
 }
