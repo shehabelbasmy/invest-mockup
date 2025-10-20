@@ -15,7 +15,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: moi-mockup
-          path: moi-mockup/target/moi-mockup.war
+          path: moi-mockup
 
       - name: Deploy WAR to WebSphere
         run: |
