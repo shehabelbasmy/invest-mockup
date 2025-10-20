@@ -86,7 +86,6 @@ jobs:
       - name: Deploy WAR to WebSphere
         shell: cmd
         run: |
-          Write-Host "Deploying WAR..."
           & "C:\opt\IBM\WebSphere\AppServer\bin\wsadmin.sh" `
             -lang jython `
             -user $env:WAS_USER `
