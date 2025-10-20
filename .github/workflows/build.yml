@@ -1,14 +1,51 @@
-name: Build WAR
+# name: Build WAR
+
+# on:
+#   push:
+#     branches:
+#       - master
+#   workflow_dispatch:
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout source
+#         uses: actions/checkout@v4
+
+#       - name: Set up JDK 8
+#         uses: actions/setup-java@v4
+#         with:
+#           java-version: '8'
+#           distribution: 'temurin'
+
+#       - name: Build WAR
+#         run: |
+#           cd moi-mockup
+#           mvn clean package -DskipTests
+
+#       - name: Upload WAR artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: moi-mockup
+#           path: moi-mockup/target/*.war
+
+
+name: Build and Deploy WAR
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
   build:
+    name: Build WAR
     runs-on: ubuntu-latest
+    outputs:
+      war-path: ${{ steps.upload.outputs.artifact-path }}
 
     steps:
       - name: Checkout source
@@ -26,7 +63,32 @@ jobs:
           mvn clean package -DskipTests
 
       - name: Upload WAR artifact
+        id: upload
         uses: actions/upload-artifact@v4
         with:
           name: moi-mockup
           path: moi-mockup/target/*.war
+
+  deploy:
+    name: Deploy to WebSphere
+    runs-on: self-hosted
+    needs: build  # ensures this runs after build
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Download WAR artifact from build
+        uses: actions/download-artifact@v4
+        with:
+          name: moi-mockup
+          path: moi-mockup
+
+      - name: Deploy WAR to WebSphere
+        run: |
+          WAR_FILE=$(ls moi-mockup/*.war)
+          echo "Deploying WAR: $WAR_FILE"
+          /opt/IBM/WebSphere/AppServer/bin/wsadmin.sh \
+            -lang jython \
+            -user ${{ secrets.WAS_USER }} \
+            -password ${{ secrets.WAS_PASSWORD }} \
+            -f deploy_app.py moi-mockup "$WAR_FILE" server1
