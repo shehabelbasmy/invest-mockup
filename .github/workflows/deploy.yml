@@ -1,0 +1,26 @@
+name: Deploy to WebSphere
+
+on:
+  workflow_dispatch:   # manual trigger from GitHub Actions UI
+
+jobs:
+  deploy:
+    runs-on: self-hosted    # MUST be the machine inside VPN / WebSphere network
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Download built WAR artifact from previous pipeline
+        uses: actions/download-artifact@v4
+        with:
+          name: app-war
+          path: .
+
+      - name: Deploy WAR to WebSphere
+        run: |
+          /opt/IBM/WebSphere/AppServer/bin/wsadmin.sh \
+            -lang jython \
+            -user ${{ secrets.WAS_USER }} \
+            -password ${{ secrets.WAS_PASSWORD }} \
+            -f deploy_app.py moi-mockup moi-mockup.war server1
