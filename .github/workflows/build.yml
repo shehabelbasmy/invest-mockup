@@ -84,7 +84,7 @@ jobs:
           path: moi-mockup
 
       - name: Deploy WAR to WebSphere
-        shell: pwsh
+        shell: cmd
         run: |
           Write-Host "Deploying WAR..."
           & "C:\opt\IBM\WebSphere\AppServer\bin\wsadmin.sh" `
