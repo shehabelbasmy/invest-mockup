@@ -1,11 +1,11 @@
 name: Deploy to WebSphere
 
 on:
-  workflow_dispatch:   # manual trigger from GitHub Actions UI
+  workflow_dispatch:
 
 jobs:
   deploy:
-    runs-on: self-hosted    # MUST be the machine inside VPN / WebSphere network
+    runs-on: self-hosted
 
     steps:
       - name: Checkout source
@@ -15,7 +15,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: moi-mockup
-          path: moi-mockup
+          path: moi-mockup  # directory to extract artifact
 
       - name: Deploy WAR to WebSphere
         run: |
@@ -23,4 +23,4 @@ jobs:
             -lang jython \
             -user ${{ secrets.WAS_USER }} \
             -password ${{ secrets.WAS_PASSWORD }} \
-            -f deploy_app.py moi-mockup moi-mockup.war server1
+            -f deploy_app.py moi-mockup moi-mockup/*.war server1
