@@ -87,5 +87,5 @@ jobs:
         shell: cmd
         run: |
           echo Deploying WAR...
-          "C:\opt\IBM\WebSphere\AppServer\bin\wsadmin.bat" -lang jython -user %WAS_USER% -password %WAS_PASSWORD% -f deploy_app.py moi-mockup moi-mockup\*.war server1
+          "D:\IBM\WebSphere\AppServer\bin\wsadmin.bat" -lang jython -user %WAS_USER% -password %WAS_PASSWORD% -f deploy_app.py moi-mockup moi-mockup\*.war server1
 
