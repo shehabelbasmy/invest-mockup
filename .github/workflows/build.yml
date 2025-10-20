@@ -86,9 +86,6 @@ jobs:
       - name: Deploy WAR to WebSphere
         shell: cmd
         run: |
-            "C:\opt\IBM\WebSphere\AppServer\bin\wsadmin.sh" `
-            -lang jython `
-            -user $env:WAS_USER `
-            -password $env:WAS_PASSWORD `
-            -f deploy_app.py moi-mockup moi-mockup\*.war server1
+          echo Deploying WAR...
+          "C:\opt\IBM\WebSphere\AppServer\bin\wsadmin.bat" -lang jython -user %WAS_USER% -password %WAS_PASSWORD% -f deploy_app.py moi-mockup moi-mockup\*.war server1
 
