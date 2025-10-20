@@ -84,10 +84,12 @@ jobs:
           path: moi-mockup
 
       - name: Deploy WAR to WebSphere
+        shell: pwsh
         run: |
-          echo "Deploying WAR: $WAR_FILE"
-          /opt/IBM/WebSphere/AppServer/bin/wsadmin.sh \
-            -lang jython \
-            -user ${{ secrets.WAS_USER }} \
-            -password ${{ secrets.WAS_PASSWORD }} \
-            -f deploy_app.py moi-mockup moi-mockup/*.war server1
+          Write-Host "Deploying WAR..."
+          & "C:\opt\IBM\WebSphere\AppServer\bin\wsadmin.sh" `
+            -lang jython `
+            -user $env:WAS_USER `
+            -password $env:WAS_PASSWORD `
+            -f deploy_app.py moi-mockup moi-mockup\*.war server1
+
