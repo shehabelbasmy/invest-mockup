@@ -20,4 +20,12 @@ jobs:
           name: moi-mockup
           path: moi-mockup
 
-      - name:
+      - name: Deploy WAR to WebSphere
+        run: |
+          WAR_FILE=$(ls moi-mockup/*.war)
+          echo "Deploying WAR: $WAR_FILE"
+          /opt/IBM/WebSphere/AppServer/bin/wsadmin.sh \
+            -lang jython \
+            -user ${{ secrets.WAS_USER }} \
+            -password ${{ secrets.WAS_PASSWORD }} \
+            -f deploy_app.py moi-mockup "$WAR_FILE" server1
