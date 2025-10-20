@@ -1,17 +1,14 @@
-name: Build and Deploy WAR
+name: Build WAR
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:  # allows manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build WAR
     runs-on: ubuntu-latest
-    outputs:
-      war-path: ${{ steps.upload.outputs.artifact-path }}
 
     steps:
       - name: Checkout source
@@ -29,7 +26,6 @@ jobs:
           mvn clean package -DskipTests
 
       - name: Upload WAR artifact
-        id: upload
         uses: actions/upload-artifact@v4
         with:
           name: moi-mockup

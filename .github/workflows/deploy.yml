@@ -1,23 +1,23 @@
-deploy:
-    name: Deploy to WebSphere
+name: Deploy to WebSphere
+
+on:
+  workflow_dispatch:  # manual trigger
+  workflow_run:
+    workflows: ["Build WAR"]
+    types:
+      - completed   # triggers after the build workflow finishes successfully
+
+jobs:
+  deploy:
     runs-on: self-hosted
-    needs: build  # ensures this runs after build
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Download WAR artifact from build
+      - name: Download WAR artifact from latest successful build
         uses: actions/download-artifact@v4
         with:
           name: moi-mockup
           path: moi-mockup
 
-      - name: Deploy WAR to WebSphere
-        run: |
-          WAR_FILE=$(ls moi-mockup/*.war)
-          echo "Deploying WAR: $WAR_FILE"
-          /opt/IBM/WebSphere/AppServer/bin/wsadmin.sh \
-            -lang jython \
-            -user ${{ secrets.WAS_USER }} \
-            -password ${{ secrets.WAS_PASSWORD }} \
-            -f deploy_app.py moi-mockup "$WAR_FILE" server1
+      - name:
