@@ -1,0 +1,6 @@
+- name: Deploy WAR to WebSphere
+  run: /opt/IBM/WebSphere/AppServer/bin/wsadmin.sh \
+      -lang jython \
+      -user ${{ secrets.WAS_USER }} \
+      -password ${{ secrets.WAS_PASSWORD }} \
+      -f deploy_app.py moi-mockup moi-mockup.war server1
